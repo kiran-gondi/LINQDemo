@@ -38,7 +38,27 @@
             //DisplayFemaleStudents(StudentsList);
 
             //HighScoreStudents(StudentsList);
-            GroupStudentsByClass(StudentsList);
+            //GroupStudentsByClass(StudentsList);
+
+            var maxScore = StudentsList.Max(student => student.Score);
+            Console.WriteLine(maxScore);
+
+            var minScroe = StudentsList.Min(student => student.Score);
+            Console.WriteLine(minScroe);
+
+            var averageScore = StudentsList.Average(student => student.Score);
+            Console.WriteLine(averageScore);
+
+            var totalScoreSum = StudentsList.Sum(student => student.Score);
+            Console.WriteLine(totalScoreSum);
+
+            var studentCount = StudentsList.Count(student => student.Age > 18);
+            Console.WriteLine(studentCount);
+
+            var highScoreStudents = StudentsList.Count(student => student.Score > 90);
+            Console.WriteLine(highScoreStudents);
+
+            //TODO RESUME FROM: Aggregation Operations (Sum, Count, Min, Max, Average)
 
             Console.ReadKey();
         }
@@ -56,6 +76,16 @@
                                                     Students = studGroup
                                                 });
 
+            var groupStudentsByAge = from student in StudentsList
+                                      group student by student.Age into studentGroupedByAge
+                                      select studentGroupedByAge;
+
+            var groupStudentsByAge1 = StudentsList.GroupBy(x => x.Age)
+                                        .Select(studGroup => new
+                                        {
+                                            Age = studGroup.Key,
+                                            Students = studGroup
+                                        });
 
             foreach (var studentGroup in studentsByClass1)
             {
@@ -69,6 +99,18 @@
                 }
                 Console.WriteLine("\n");
             }
+
+            /*foreach (var studentGroup in groupStudentsByAge1) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Students Grouped by Age {studentGroup.Age} is {studentGroup.Students.Count()}");
+                Console.ResetColor();
+                foreach (var student in studentGroup.Students)
+                {
+                    Console.WriteLine(student.Id + ", " + student.Name + ", "
+                        + student.Age + ", " + student.Gender + ", " + student.Class);
+                }
+                Console.WriteLine("\n");
+            }*/
         }
 
         private static void HighScoreStudents(List<Student> StudentsList)
@@ -113,13 +155,13 @@
         {
             Student s1 = new Student() { Id = 1, Name = "Ram", Age = 18, Gender = Gender.Male, Class = "8", Score = 60 };
             StudentsList.Add(s1);
-            Student s2 = new Student() { Id = 2, Name = "Rahim", Age = 28, Gender = Gender.Male, Class = "8", Score = 90 };
+            Student s2 = new Student() { Id = 2, Name = "Rahim", Age = 18, Gender = Gender.Male, Class = "8", Score = 90 };
             StudentsList.Add(s2);
             Student s3 = new Student() { Id = 3, Name = "Ramya", Age = 15, Gender = Gender.Female, Class = "6", Score = 82 };
             StudentsList.Add(s3);
             Student s4 = new Student() { Id = 4, Name = "Rachitha", Age = 17, Gender = Gender.Female, Class = "8", Score = 77 };
             StudentsList.Add(s4);
-            Student s5 = new Student() { Id = 5, Name = "Asif", Age = 22, Gender = Gender.Male, Class = "6", Score = 92 };
+            Student s5 = new Student() { Id = 5, Name = "Asif", Age = 17, Gender = Gender.Male, Class = "6", Score = 92 };
             StudentsList.Add(s5);
             Student s6 = new Student() { Id = 6, Name = "Tom", Age = 37, Gender = Gender.Male, Class = "6", Score = 89 };
             StudentsList.Add(s6);
